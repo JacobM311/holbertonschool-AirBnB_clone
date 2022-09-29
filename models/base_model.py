@@ -28,8 +28,12 @@ class BaseModel:
                                  self.id, self.__dict__)
 =======
         return "[{}] ({}) {}".format(self.__class__.__name__,
+<<<<<<< HEAD
                                 self.id, self.__dict__)
 >>>>>>> b5b332daa2be1650e51b687ba8d6efcaa4d8b1c2
+=======
+                                     self.id, self.__dict__)
+>>>>>>> 8b4165f40e2d0f4cbae82ba5c06a1bfbab5b5ff5
 
     def save(self):
         """saves"""
