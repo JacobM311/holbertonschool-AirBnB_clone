@@ -13,7 +13,6 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Base Model __init__ Method"""
 
-
         self.id = str(uuid4())
         self.name = name
         self.updated_at = self.created_at = datetime.now()
@@ -21,7 +20,8 @@ class BaseModel:
     def __str__(self):
         """prints string representation of base"""
 
-    return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+    return "[{}] ({}) {}".format(self.__class__.__name__,
+                                 self.id, self.__dict__)
 
     def save(self):
         """saves"""
