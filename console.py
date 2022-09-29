@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ cmd line class """
 import cmd
-
+import readline
 
 class HBNBCommand(cmd.Cmd):
     """ class for console """
@@ -18,3 +18,6 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ do nothing if empty """
         pass
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
