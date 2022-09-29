@@ -19,7 +19,7 @@ class BaseModel:
     def __str__(self):
         """prints string representation of base"""
         return "[{}] ({}) {}".format(self.__class__.__name__,
-                                        self.id, self.__dict__)
+                                self.id, self.__dict__)
 
     def save(self):
         """saves"""
