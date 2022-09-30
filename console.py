@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 """ cmd line class """
+
+
 import cmd
 import readline
+
 
 class HBNBCommand(cmd.Cmd):
     """ class for console """
     prompt = "(hbnb) "
 
-    def quit(self, arg):
+    def do_quit(self, arg):
         """ quit command """
         raise SystemExit
 
-    def EOF(self, arg):
+    def do_EOF(self, arg):
         """ exists on EOF """
         raise SystemExit
 
