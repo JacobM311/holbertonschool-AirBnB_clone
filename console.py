@@ -22,5 +22,8 @@ class HBNBCommand(cmd.Cmd):
         """ do nothing if empty """
         pass
 
+    def do_create(self, arg):
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
