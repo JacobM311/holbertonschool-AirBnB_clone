@@ -2,10 +2,8 @@
 """
 Contains the FileStorage class
 """
-import os
-from os import path
+from os.path import exists
 import json
-import models
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -30,7 +28,7 @@ class FileStorage:
 
     def new(self, obj):
         "sets in __objects the obj with key <obj class name>.id"
-        self.__objects[obj.__class__.__name__ + "." + obj.id] = obj
+        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
