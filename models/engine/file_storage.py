@@ -43,4 +43,4 @@ class FileStorage:
                 for key in bang:
                     self.__objects[key] = getattr(
                             models,
-                            bang[key]['__class__'])(**old_instances[key])
+                            bang[key]['__class__'])(**bang[key])
