@@ -5,6 +5,15 @@ Contains the FileStorage class
 
 from os import path
 import json
+import models
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models.engine.file_storage import FileStorage
 
 
 class FileStorage:
@@ -25,9 +34,12 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
+        JsonDict = {}
+        for key, value in self.__objects.items():
+            JsonDict[key] = value.to_dict()
         with open(self.__file_path, mode="w",
                   encoding="utf-8") as outinstances:
-            json.dump(self.__objects, outinstances)
+            json.dump(JsonDict, outinstances)
 
     def reload(self):
         """deserializes the JSON file to __objects
@@ -36,4 +48,5 @@ class FileStorage:
         no exception should be raised)"""
         if exists(self.__file_path):
             with open(self.__file_path, encoding='utf-8') as ininstances:
-                self.__objects = json.load(ininstances)
+                PythonDict = json.load(ininstances)
+                self.__objects.update(PythonDict)
