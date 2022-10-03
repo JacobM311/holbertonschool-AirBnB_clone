@@ -38,9 +38,9 @@ class FileStorage:
         ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)"""
         if exists(self.__file_path):
-            with open(self.__file_path, encoding='utf-8') as f:
-                old_instances = json.load(f)
-                for k in old_instances:
-                    self.__objects[k] = getattr(
-                            models,
-                            old_instances[k]['__class__'])(**old_instances[k])
+            with open(self.__file_path, encoding='utf-8') as ininstances:
+                old_instances = json.load(ininstances)
+                for key in old_instances:
+                    self.__objects[key] = getattr(
+                        models,
+                        old_instances[key]['__class__'])(**old_instances[key])
