@@ -2,7 +2,7 @@
 """
 Contains the FileStorage class
 """
-
+import os
 from os import path
 import json
 import models
@@ -35,11 +35,11 @@ class FileStorage:
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         JsonDict = {}
-        for key, value in self.__objects.items():
-            JsonDict[key] = value.to_dict()
+        for key in self.__objects:
+            JsonDict[key] = self.__objects[key].to_dict()
         with open(self.__file_path, mode="w",
-                  encoding="utf-8") as outinstances:
-            json.dump(JsonDict, outinstances)
+                  encoding="utf-8") as file:
+            json.dump(JsonDict, file)
 
     def reload(self):
         """deserializes the JSON file to __objects
@@ -47,6 +47,6 @@ class FileStorage:
         ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)"""
         if exists(self.__file_path):
-            with open(self.__file_path, encoding='utf-8') as ininstances:
-                PythonDict = json.load(ininstances)
+            with open(self.__file_path, encoding='utf-8') as file:
+                PythonDict = json.load(file)
                 self.__objects.update(PythonDict)
