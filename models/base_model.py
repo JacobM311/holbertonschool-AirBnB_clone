@@ -5,7 +5,6 @@
 import uuid
 from datetime import datetime
 import models
-from models.__init__ import storage
 
 class BaseModel:
     """Base Model Class"""
@@ -14,12 +13,15 @@ class BaseModel:
         """Base Model __init__ Method"""
         if kwargs:
             for key, value in kwargs.items():
-                if key != "__class__":
+                if key in ('created_at', 'updated_at'):
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+
+                if arg != '__class__':
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.updated_at = self.created_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """prints string representation of base"""
@@ -29,7 +31,7 @@ class BaseModel:
     def save(self):
         """saves"""
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """dictionary"""
