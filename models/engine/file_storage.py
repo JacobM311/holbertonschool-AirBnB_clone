@@ -38,4 +38,8 @@ class FileStorage:
         no exception should be raised)"""
         if exists(self.__file_path):
             with open(self.__file_path, encoding='utf-8') as f:
-                self.__objects = json.load(f)
+                bang = json.load(f)
+                for key in bang:
+                    self.__objects[key] = getattr(
+                            models,
+                            bang[key]['__class__'])(**old_instances[key])
