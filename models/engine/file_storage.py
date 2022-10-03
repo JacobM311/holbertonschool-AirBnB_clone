@@ -4,7 +4,9 @@ Contains the FileStorage class
 """
 from os.path import exists
 import json
-import models
+from models.base_model import BaseModel
+from models.user import User
+
 
 
 class FileStorage:
@@ -38,9 +40,8 @@ class FileStorage:
         ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)"""
         if exists(self.__file_path):
-            with open(self.__file_path, encoding='utf-8') as f:
-                bang = json.load(f)
-                for key in bang:
-                    self.__objects[key] = getattr(
-                            models,
-                            bang[key]['__class__'])(**bang[key])
+            with open(self.__file_path, "r") as file_path:
+                reloaded_dict = json.load(file_path)
+
+                for obj_key in reloaded_dict.keys():
+                    self.new(BaseModel(**reloaded_dict[obj_key]))
