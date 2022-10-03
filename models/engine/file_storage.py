@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 from os.path import exists
 import json
+import models
 
 
 class FileStorage:
