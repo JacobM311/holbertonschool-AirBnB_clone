@@ -2,8 +2,7 @@
 """
 Contains the FileStorage class
 """
-
-from os import path
+from os.path import exists
 import json
 
 
@@ -20,14 +19,18 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        "sets in __objects the obj with key <obj class name>.id"
-        self.__objects[obj.__class__.__name__ + "." + obj.id] = obj
+        """sets in __objects the obj with key <obj class name>.id"""
+        self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         with open(self.__file_path, mode="w",
-                  encoding="utf-8") as outinstances:
-            json.dump(self.__objects, outinstances)
+                  encoding="utf-8") as f:
+            json.dump(
+                    {
+                        key: (value.to_dict() if not isinstance(value, dict) else value)
+                        for (key, value) in self.__objects.items()
+                    }, f)
 
     def reload(self):
         """deserializes the JSON file to __objects
@@ -35,5 +38,5 @@ class FileStorage:
         ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)"""
         if exists(self.__file_path):
-            with open(self.__file_path, encoding='utf-8') as ininstances:
-                self.__objects = json.load(ininstances)
+            with open(self.__file_path, encoding='utf-8') as f:
+                self.__objects = json.load(f)

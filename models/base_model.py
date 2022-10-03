@@ -2,11 +2,10 @@
 """base model"""
 
 
-import json
 import uuid
 from datetime import datetime
 import models
-
+from models.__init__ import storage
 
 class BaseModel:
     """Base Model Class"""
@@ -20,6 +19,7 @@ class BaseModel:
         else:
             self.id = str(uuid.uuid4())
             self.updated_at = self.created_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """prints string representation of base"""
@@ -29,10 +29,12 @@ class BaseModel:
     def save(self):
         """saves"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """dictionary"""
-        return dict(self.__dict__,
-                    __class__=self.__class__.__name__,
-                    updated_at=self.updated_at.isoformat(),
-                    created_at=self.created_at.isoformat())
+        BaseDict = self.__dict__.copy()
+        BaseDict["__class__"] = self.__class__.__name__
+        BaseDict["created_at"] = self.created_at.isoformat()
+        BaseDict["updated_at"] = self.updated_at.isoformat()
+        return BaseDict
