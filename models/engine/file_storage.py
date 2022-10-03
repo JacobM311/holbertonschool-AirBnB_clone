@@ -24,13 +24,12 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        with open(self.__file_path, mode="w",
-                  encoding="utf-8") as f:
+        with open(self.__file_path, 'w', encoding='utf-8') as outinstances:
             json.dump(
-                    {
-                        key: (value.to_dict() if not isinstance(value, dict) else value)
-                        for (key, value) in self.__objects.items()
-                    }, f)
+                {
+                    k: (v.to_dict() if not isinstance(v, dict) else v)
+                    for (k, v) in self.__objects.items()
+                }, outinstances)
 
     def reload(self):
         """deserializes the JSON file to __objects
