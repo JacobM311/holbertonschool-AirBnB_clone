@@ -17,7 +17,7 @@ from models.engine.file_storage import FileStorage
 classes = {"BaseModel": BaseModel,
            "User": User,
            "State": State,
-           "Ctiy": City,
+           "City": City,
            "Amenity": Amenity,
            "Place": Place,
            "Review": Review
