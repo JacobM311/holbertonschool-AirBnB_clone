@@ -17,7 +17,7 @@ from models.engine.file_storage import FileStorage
 classes = {"BaseModel": BaseModel,
            "User": User,
            "State": State,
-           "Ctiy": City,
+           "City": City,
            "Amenity": Amenity,
            "Place": Place,
            "Review": Review
@@ -98,6 +98,52 @@ class HBNBCommand(cmd.Cmd):
                         item = myDict.get(obj)
                         ObjList.append(str(item))
         print(ObjList)
+
+    def do_destroy(self, arg):
+        """
+        Deletes an instance based on the class name and id
+        """
+        StrList = arg.split(" ")
+        if len(arg) == 0:
+            print("** class name missing **")
+            return
+        elif StrList[0] not in classes.keys():
+            print("** class doesn't exist **")
+            return
+        elif len(StrList) < 2:
+            print("** instance id missing **")
+            return
+        elif StrList[0] in classes.keys():
+            ObjFind = StrList[0] + "." + StrList[1]
+            Objs = storage.all()
+            if ObjFind in Objs:
+                del Objs[ObjFind]
+                storage.save()
+            else:
+                print("** no instance found **")
+                return
+
+    def do_update(self, arg):
+        """ Updates an instance based on the class name and id by adding or updating attribute """
+        alist = arg.split(" ")
+        if len(arg) < 1:
+            print("** class name missing **")
+        elif len(alist) < 2:
+            print("** instance id missing **")
+        elif len(alist) < 3:
+            print("** attribute name missing **")
+        elif len(alist) < 4:
+            print("** value missing **")
+        elif alist[0] not in classes.keys():
+            print("** class doesn't exist **")
+        else:
+            ObjFind = alist[0] + "." + alist[1]
+            if ObjFind in storage.all():
+                setattr(storage.all()[ObjFind], alist[2], alist[3])
+                storage.all()[ObjFind].save()
+            else:
+                print("** no instance found **")
+
 
 
 
