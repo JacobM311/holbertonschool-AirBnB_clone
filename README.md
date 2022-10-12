@@ -151,4 +151,4 @@ $ ./console.py
 
 ## Authors
 - Jacob Marshall
-- Conner Hostler
+- Conner Curtis
